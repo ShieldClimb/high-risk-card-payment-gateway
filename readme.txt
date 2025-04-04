@@ -1,7 +1,7 @@
 === ShieldClimb – Card Payment Gateway with Instant Payouts and Chargeback Protection ===
 Contributors: shieldclimb
 Donate link: https://shieldclimb.com/
-Tags: payment gateway, high-risk payment, instant payout, credit card, chargeback protection
+Tags: payment gateway, high-risk payment, woocommerce, credit card, payment
 Requires at least: 5.8
 Tested up to: 6.7
 Stable tag: 1.2.1
@@ -33,7 +33,7 @@ Card Payment Gateway with Instant Payouts to your USDC wallet and Chargeback Pro
 * Custom Payment Icons Per Provider
 * Multi-Currency Support
 
-* The plugin and offered service through [shieldclimb.com Instant Payment Gateway API](https://shieldclimb.com/) is subject to the [service terms](https://shieldclimb.com/terms-of-service/) and [Privacy Policy](https://shieldclimb.com/privacy-policy/).
+The plugin and offered service through [shieldclimb.com Instant Payment Gateway API](https://shieldclimb.com/) is subject to the [service terms](https://shieldclimb.com/terms-of-service/) and [Privacy Policy](https://shieldclimb.com/privacy-policy/).
 
 == Frankfurter API - Third-Party Service Documentation ==
 
