@@ -19,6 +19,10 @@ ShieldClimb's **[High-Risk Card Payment Gateway](https://shieldclimb.com/high-ri
 4. **Customize Display**: Adjust labels and descriptions for payment methods.
 5. **Save & Accept Payments**: Start processing payments instantly!
 
+## 📺 Watch the Full Install and Setup Tutorial Here:
+
+[![How to Install and Setup the Plugin](https://img.youtube.com/vi/Z9CLAPr6heA/0.jpg)](https://www.youtube.com/watch?v=Z9CLAPr6heA)
+
 ## 🔥 Features
 
 - **[Auto-Hide Providers](https://shieldclimb.com/high-risk-card-payment-gateway/)**: Hide options based on region and minimum balance.
@@ -64,6 +68,16 @@ Anyone can use our plugin, but businesses listed in our **[Prohibited Business L
 ![Checkout Example](https://shieldclimb.com/wp-content/uploads/2025/03/screenshot-2-2.png)
 
 ## 📜 Changelog
+
+### V1.2.3
+
+- : Readme file to include tutorial video link.
+
+### V1.2.2
+
+- Updated: Tested up to WordPress 6.8 and WooCommerce 9.8.1
+- Improved: Code organization and optimization.
+- Updated: Heading format corrections.
 
 ### v1.2.1
 - Fixed: Payment options not appearing on the "Pay for Order" page.
