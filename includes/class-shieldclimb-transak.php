@@ -18,7 +18,7 @@ class shieldclimb_Instant_Payment_Gateway_Transak extends WC_Payment_Gateway {
     public function __construct() {
         $this->id                 = 'shieldclimb-transak';
         $this->icon = sanitize_url($this->get_option('icon_url'));
-        $this->method_title       = esc_html__('ShieldClimb – Card Payment Gateway with Instant Payouts and Chargeback Protection (transak.com | Min USD30 | Auto Hide If Below Min)', 'shieldclimb-high-risk-card-payment-gateway'); // Escaping title
+        $this->method_title       = esc_html__('ShieldClimb – transak.com | Min USD15 | Auto Hide If Below Min', 'shieldclimb-high-risk-card-payment-gateway'); // Escaping title
         $this->method_description = esc_html__('High Risk Business Card Payment Gateway with Chargeback Protection and Instant USDC POLYGON Wallet Payouts using transak.com infrastructure', 'shieldclimb-high-risk-card-payment-gateway'); // Escaping description
         $this->has_fields         = false;
 

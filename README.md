@@ -69,9 +69,15 @@ Anyone can use our plugin, but businesses listed in our **[Prohibited Business L
 
 ## 📜 Changelog
 
+### V1.2.4
+
+- Updated: Tested up to WooCommerce 9.9.3
+- Fixed: Adjusted the payment gateway title to display correctly in WooCommerce settings after changes introduced in WooCommerce 9.9.3
+- Updated: Payment providers list
+
 ### V1.2.3
 
-- : Readme file to include tutorial video link.
+- Updated: Readme file to include tutorial video link.
 
 ### V1.2.2
 

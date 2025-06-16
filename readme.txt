@@ -4,10 +4,10 @@ Donate link: https://shieldclimb.com/
 Tags: payment gateway, high-risk payment, woocommerce, credit card, payment
 Requires at least: 5.8
 Tested up to: 6.8
-Stable tag: 1.2.3
+Stable tag: 1.2.4
 Requires PHP: 7.2
 WC requires at least: 5.8
-WC tested up to: 9.8.1
+WC tested up to: 9.9.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -100,6 +100,12 @@ Anyone can use our payment plugin instantly without providing any information. H
 2. screenshot-2.png
 
 == Changelog ==
+
+= V1.2.4 =
+
+* **Updated**: Tested up to WooCommerce 9.9.3
+* **Fixed**: Adjusted the payment gateway title to display correctly in WooCommerce settings after changes introduced in WooCommerce 9.9.3
+* **Updated**: Payment providers list
 
 = V1.2.3 =
 

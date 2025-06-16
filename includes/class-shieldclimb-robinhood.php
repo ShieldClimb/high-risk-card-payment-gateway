@@ -18,7 +18,7 @@ class shieldclimb_Instant_Payment_Gateway_Robinhood extends WC_Payment_Gateway {
     public function __construct() {
         $this->id                 = 'shieldclimb-robinhood';
         $this->icon = sanitize_url($this->get_option('icon_url'));
-        $this->method_title       = esc_html__('ShieldClimb – Card Payment Gateway with Instant Payouts and Chargeback Protection (robinhood.com | Min USD5 | Auto-hide if below min or non-US)', 'shieldclimb-high-risk-card-payment-gateway'); // Escaping title
+        $this->method_title       = esc_html__('ShieldClimb – robinhood.com | Min USD5 | Auto-hide if below min or non-US', 'shieldclimb-high-risk-card-payment-gateway'); // Escaping title
         $this->method_description = esc_html__('High Risk Business Card Payment Gateway with Chargeback Protection and Instant USDC POLYGON Wallet Payouts using robinhood.com infrastructure', 'shieldclimb-high-risk-card-payment-gateway'); // Escaping description
         $this->has_fields         = false;
 

@@ -19,7 +19,7 @@ class shieldclimb_Instant_Payment_Gateway_Coinbase extends WC_Payment_Gateway {
     public function __construct() {
         $this->id                 = 'shieldclimb-coinbase';
         $this->icon = sanitize_url($this->get_option('icon_url'));
-        $this->method_title       = esc_html__('ShieldClimb – Card Payment Gateway with Instant Payouts and Chargeback Protection (coinbase.com | Min USD2 | Auto Hide If Below Min)', 'shieldclimb-high-risk-card-payment-gateway'); // Escaping title
+        $this->method_title       = esc_html__('ShieldClimb – coinbase.com | Min USD2 | Auto Hide If Below Min', 'shieldclimb-high-risk-card-payment-gateway'); // Escaping title
         $this->method_description = esc_html__('High Risk Business Card Payment Gateway with Chargeback Protection and Instant USDC POLYGON Wallet Payouts using coinbase.com infrastructure', 'shieldclimb-high-risk-card-payment-gateway'); // Escaping description
         $this->has_fields         = false;
 

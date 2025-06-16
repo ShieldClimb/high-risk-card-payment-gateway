@@ -41,22 +41,21 @@ function shieldclimbgateway_hide_payment_methods($available_gateways) {
 
     // Payment gateway restrictions based on USD total
     $gateway_conditions = [
-        'shieldclimb-werteur' => 1.09,
-        'shieldclimb-stripe' => 1.09,
+        'shieldclimb-stripe' => 2,
         'shieldclimb-coinbase' => 2,
         'shieldclimb-robinhood' => 5,
-        'shieldclimb-rampnetwork' => 4.08,
-        'shieldclimb-topper' => 10,
+        'shieldclimb-rampnetwork' => 4,
         'shieldclimb-unlimit' => 10,
-        'shieldclimb-kado' => 16.99,
-        'shieldclimb-bitnovo' => 17.99,
+        'shieldclimb-bitnovo' => 10,
         'shieldclimb-guardarian' => 20,
-        'shieldclimb-swipelux' => 22.99,
+        'shieldclimb-swipelux' => 14,
         'shieldclimb-mercuryo' => 30,
         'shieldclimb-sardine' => 30,
-        'shieldclimb-transak' => 30,
+        'shieldclimb-transak' => 15,
         'shieldclimb-simplex' => 50,
         'shieldclimb-utorg' => 50,
+        'shieldclimb-revolut' => 15,
+        'shieldclimb-finchpay' => 40,
         'shieldclimb-transfi' => 70
     ];
 
