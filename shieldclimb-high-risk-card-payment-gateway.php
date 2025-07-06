@@ -3,12 +3,12 @@
  * Plugin Name: ShieldClimb – Card Payment Gateway with Instant Payouts and Chargeback Protection
  * Plugin URI: https://shieldclimb.com/high-risk-card-payment-gateway/
  * Description: High-Risk Business Card Payment Gateway with Instant Payouts to Your USDC Wallet and Full Chargeback Protection – Includes Automatic Order Processing and Auto-Hide Provider Options by Region and Minimum Balance (For setting up go to > Woocommerce > Setting > Payments tab).
- * Version: 1.2.4
+ * Version: 1.2.5
  * Requires Plugins: woocommerce
  * Requires at least: 5.8
  * Tested up to: 6.8
  * WC requires at least: 5.8
- * WC tested up to: 9.9.3
+ * WC tested up to: 9.9.5
  * Requires PHP: 7.2
  * Author: shieldclimb.com
  * Author URI: https://shieldclimb.com/about-us/
@@ -90,7 +90,6 @@ add_action('wp_enqueue_scripts', 'shieldclimbgateway_enqueue_styles');
 	include_once(plugin_dir_path(__FILE__) . 'includes/class-shieldclimb-mercuryo.php'); // Include the payment gateway class
 	include_once(plugin_dir_path(__FILE__) . 'includes/class-shieldclimb-transak.php'); // Include the payment gateway class
 	include_once(plugin_dir_path(__FILE__) . 'includes/class-shieldclimb-guardarian.php'); // Include the payment gateway class
-	include_once(plugin_dir_path(__FILE__) . 'includes/class-shieldclimb-utorg.php'); // Include the payment gateway class
 	include_once(plugin_dir_path(__FILE__) . 'includes/class-shieldclimb-transfi.php'); // Include the payment gateway class
 	include_once(plugin_dir_path(__FILE__) . 'includes/class-shieldclimb-sardine.php'); // Include the payment gateway class
 	include_once(plugin_dir_path(__FILE__) . 'includes/class-shieldclimb-unlimit.php'); // Include the payment gateway class
@@ -98,9 +97,7 @@ add_action('wp_enqueue_scripts', 'shieldclimbgateway_enqueue_styles');
 	include_once(plugin_dir_path(__FILE__) . 'includes/class-shieldclimb-robinhood.php'); // Include the payment gateway class
 	include_once(plugin_dir_path(__FILE__) . 'includes/class-shieldclimb-coinbase.php'); // Include the payment gateway class
 	include_once(plugin_dir_path(__FILE__) . 'includes/class-shieldclimb-simplex.php'); // Include the payment gateway class
-    include_once(plugin_dir_path(__FILE__) . 'includes/class-shieldclimb-swipelux.php'); // Include the payment gateway class
     include_once(plugin_dir_path(__FILE__) . 'includes/class-shieldclimb-revolut.php'); // Include the payment gateway class
-    include_once(plugin_dir_path(__FILE__) . 'includes/class-shieldclimb-finchpay.php'); // Include the payment gateway class
 
 	// Conditional function that check if Checkout page use Checkout Blocks
 function shieldclimbgateway_is_checkout_block() {
