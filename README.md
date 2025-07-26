@@ -9,7 +9,7 @@
 [![License](https://img.shields.io/badge/License-GPLv3-blue)](http://www.gnu.org/licenses/gpl-3.0.html)
 [![PHP Version](https://img.shields.io/badge/PHP-7.2+-blue)](https://www.php.net/)
 
-ShieldClimb's **[High-Risk Card Payment Gateway](https://shieldclimb.com/high-risk-card-payment-gateway/)** enables instant payouts to your USDC (Polygon) wallet while offering full chargeback protection. Accept **Visa, Mastercard, Amex, Google Pay, and Apple Pay** seamlessly.
+ShieldClimb's **[High-Risk Card Payment Gateway](https://shieldclimb.com/high-risk-payment-gateway/)** enables instant payouts to your USDC (Polygon) wallet while offering full chargeback protection. Accept **Visa, Mastercard, Amex, Google Pay, and Apple Pay** seamlessly.
 
 ## 🚀 Quick Start
 
@@ -25,20 +25,20 @@ ShieldClimb's **[High-Risk Card Payment Gateway](https://shieldclimb.com/high-ri
 
 ## 🔥 Features
 
-- **[Auto-Hide Providers](https://shieldclimb.com/high-risk-card-payment-gateway/)**: Hide options based on region and minimum balance.
-- **[Reliable Payment Processing](https://shieldclimb.com/high-risk-card-payment-gateway/)**: Carefully selected providers ensure efficiency.
-- **[Automatic Order Processing](https://shieldclimb.com/high-risk-card-payment-gateway/)**: Orders are confirmed automatically.
-- **[Instant Access & No KYB](https://shieldclimb.com/high-risk-card-payment-gateway/)**: No sign-up required.
-- **[Multi-Payment Support](https://shieldclimb.com/high-risk-card-payment-gateway/)**: Accept Visa, Mastercard, Amex, Google Pay, and Apple Pay.
-- **[Instant Payouts](https://shieldclimb.com/high-risk-card-payment-gateway/)**: Receive USDC immediately.
-- **[Chargeback Protection](https://shieldclimb.com/high-risk-card-payment-gateway/)**: Transactions are final and irreversible.
-- **[Privacy-Focused](https://shieldclimb.com/high-risk-card-payment-gateway/)**: Each order gets a unique temporary wallet.
-- **[Admin Tracking](https://shieldclimb.com/high-risk-card-payment-gateway/)**: Monitor payouts within WordPress.
-- **[Multi-Currency Support](https://shieldclimb.com/high-risk-card-payment-gateway/)**: Accept payments in various currencies.
+- **[Auto-Hide Providers](https://shieldclimb.com/high-risk-payment-gateway/)**: Hide options based on region and minimum balance.
+- **[Reliable Payment Processing](https://shieldclimb.com/high-risk-payment-gateway/)**: Carefully selected providers ensure efficiency.
+- **[Automatic Order Processing](https://shieldclimb.com/high-risk-payment-gateway/)**: Orders are confirmed automatically.
+- **[Instant Access & No KYB](https://shieldclimb.com/high-risk-payment-gateway/)**: No sign-up required.
+- **[Multi-Payment Support](https://shieldclimb.com/high-risk-payment-gateway/)**: Accept Visa, Mastercard, Amex, Google Pay, and Apple Pay.
+- **[Instant Payouts](https://shieldclimb.com/high-risk-payment-gateway/)**: Receive USDC immediately.
+- **[Chargeback Protection](https://shieldclimb.com/high-risk-payment-gateway/)**: Transactions are final and irreversible.
+- **[Privacy-Focused](https://shieldclimb.com/high-risk-payment-gateway/)**: Each order gets a unique temporary wallet.
+- **[Admin Tracking](https://shieldclimb.com/high-risk-payment-gateway/)**: Monitor payouts within WordPress.
+- **[Multi-Currency Support](https://shieldclimb.com/high-risk-payment-gateway/)**: Accept payments in various currencies.
 
 ## 🔒 Security & Compliance
 
-- **[Secure Transactions](https://shieldclimb.com/high-risk-card-payment-gateway/)** – End-to-end encryption ensures safe processing.
+- **[Secure Transactions](https://shieldclimb.com/high-risk-payment-gateway/)** – End-to-end encryption ensures safe processing.
 - **[Privacy-First](https://shieldclimb.com/privacy-policy)** – No personal data is collected or stored.
 - **[Regulatory Compliance](https://shieldclimb.com/terms-of-service)** – Meets international standards.
 
@@ -57,7 +57,7 @@ Having issues? Check our guide on **[Fixing WooCommerce Payment Errors](https://
 If payments are received but orders remain pending, follow our **[Guide to Fix Payout Wallet Address Errors](https://shieldclimb.com/blog/troubleshooting-payout-wallet-address-error/)**.
 
 ### Are there any restricted businesses?
-Anyone can use our plugin, but businesses listed in our **[Prohibited Business List](https://shieldclimb.com/high-risk-card-payment-gateway/#prohibited-business-list)** will be blocked.
+Anyone can use our plugin, but businesses listed in our **[Prohibited Business List](https://shieldclimb.com/high-risk-payment-gateway/#prohibited-business-list)** will be blocked.
 
 ## 📸 Screenshots
 
@@ -108,7 +108,7 @@ We welcome contributions! If you'd like to improve this plugin, feel free to **s
 
 - **[GitHub Repository](https://github.com/shieldclimb/high-risk-card-payment-gateway)** – Submit issues or PRs.
 - **[Support Forum](https://shieldclimb.com/contact-us/)** – Get help with setup or troubleshooting.
-- **[Documentation](https://shieldclimb.com/high-risk-card-payment-gateway/)** – Read detailed guides.
+- **[Documentation](https://shieldclimb.com/high-risk-payment-gateway/)** – Read detailed guides.
 
 ## 📜 License
 
@@ -116,7 +116,7 @@ Released under **GPLv3**. See [LICENSE](http://www.gnu.org/licenses/gpl-3.0.html
 
 ---
 ### 🌐 Helpful Links
-- **[ShieldClimb High-Risk Card Payment Gateway](https://shieldclimb.com/high-risk-card-payment-gateway/)** – Learn more about our secure card processing.
+- **[ShieldClimb High-Risk Card Payment Gateway](https://shieldclimb.com/high-risk-payment-gateway/)** – Learn more about our secure card processing.
 - **[Fix WooCommerce No Payment Methods Available Error](https://shieldclimb.com/blog/fix-no-payment-methods-available-error/)** – Troubleshooting guide.
 - **[Guide to Fix Payout Wallet Address Errors](https://shieldclimb.com/blog/troubleshooting-payout-wallet-address-error/)** – Troubleshooting guide.
 - **[ShieldClimb Terms of Service](https://shieldclimb.com/terms-of-service/)** – Read our service policies.
