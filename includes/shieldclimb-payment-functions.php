@@ -42,7 +42,6 @@ function shieldclimbgateway_hide_payment_methods($available_gateways) {
     // Payment gateway restrictions based on USD total
     $gateway_conditions = [
         'shieldclimb-stripe' => 2,
-        'shieldclimb-coinbase' => 2,
         'shieldclimb-robinhood' => 5,
         'shieldclimb-rampnetwork' => 4,
         'shieldclimb-unlimit' => 10,
