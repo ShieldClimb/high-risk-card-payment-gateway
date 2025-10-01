@@ -1,6 +1,6 @@
 === ShieldClimb – Card Payment Gateway with Instant Payouts and Chargeback Protection ===
 Contributors: shieldclimb
-Donate link: https://shieldclimb.com/
+Donate link: https://shieldclimb.com/product/donate-now/
 Tags: payment gateway, high-risk payment, woocommerce, credit card, payment
 Requires at least: 5.8
 Tested up to: 6.8
@@ -95,7 +95,7 @@ Our plugin is tested to mark orders as processing automatically after payment. Y
 
 = Are there any restricted businesses? =
 
-Anyone can use our payment plugin instantly without providing any information. However if your website category falls under our [prohibited business list](https://shieldclimb.com/high-risk-card-payment-gateway/#prohibited-business-list) your domain will be blocked.
+Anyone can use our payment plugin instantly without providing any information. However if your website category falls under our [prohibited business list](https://shieldclimb.com/high-risk-payment-gateway/#prohibited-business-list) your domain will be blocked.
 
 == Screenshots ==
 
