@@ -69,6 +69,16 @@ Anyone can use our plugin, but businesses listed in our **[Prohibited Business L
 
 ## 📜 Changelog
 
+### V1.2.7
+
+- Updated: Tested up to WordPress 6.9 & WooCommerce 10.3.6
+- New: New providers including UPI/IMPS for India (INR), Interac for Canada (CAD), Binance, Moonpay and more
+- New: Added Hosted checkout with multiple providers on one page, automatic customer location detection for higher conversions and page customization option
+- New: Added Custom payment provider option
+- Improved: Checkout on your own domain
+- Improved: Updated minimum amount for some providers
+- Fixed: USD bug for some providers
+
 ### V1.2.6
 
 - Updated: Tested up to WooCommerce 10.2.2

@@ -3,24 +3,24 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-add_action('plugins_loaded', 'init_shieldclimbgateway_stripecom_gateway');
+add_action('plugins_loaded', 'init_shieldclimbgateway_cryptixio_gateway');
 
-function init_shieldclimbgateway_stripecom_gateway() {
+function init_shieldclimbgateway_cryptixio_gateway() {
     if (!class_exists('WC_Payment_Gateway')) {
         return;
     }
 
-class shieldclimb_Instant_Payment_Gateway_Stripe extends WC_Payment_Gateway {
+class shieldclimb_Instant_Payment_Gateway_Cryptix extends WC_Payment_Gateway {
 
     protected $icon_url;
-    protected $stripecom_wallet_address;
-    protected $stripecom_custom_domain;
+    protected $cryptixio_wallet_address;
+    protected $cryptixio_custom_domain;
 
     public function __construct() {
-        $this->id                 = 'shieldclimb-stripe';
+        $this->id                 = 'shieldclimb-cryptix';
         $this->icon = sanitize_url($this->get_option('icon_url'));
-        $this->method_title       = esc_html__('ShieldClimb – stripe (US only) | Min USD2 | Auto-hide if below min or non-US', 'shieldclimb-high-risk-card-payment-gateway'); // Escaping title
-        $this->method_description = esc_html__('High Risk Business Card Payment Gateway with Chargeback Protection and Instant USDC POLYGON Wallet Payouts using stripe.com infrastructure', 'shieldclimb-high-risk-card-payment-gateway'); // Escaping description
+        $this->method_title       = esc_html__('ShieldClimb – cryptix.io | Min USD20 | Auto Hide If Below Min', 'shieldclimb-high-risk-card-payment-gateway'); // Escaping title
+        $this->method_description = esc_html__('High Risk Business Card Payment Gateway with Chargeback Protection and Instant USDC POLYGON Wallet Payouts using cryptix.io infrastructure', 'shieldclimb-high-risk-card-payment-gateway'); // Escaping description
         $this->has_fields         = false;
 
         $this->init_form_fields();
@@ -30,8 +30,8 @@ class shieldclimb_Instant_Payment_Gateway_Stripe extends WC_Payment_Gateway {
         $this->description = sanitize_text_field($this->get_option('description'));
 
         // Use the configured settings for redirect and icon URLs
-        $this->stripecom_custom_domain = rtrim(str_replace(['https://','http://'], '', sanitize_text_field($this->get_option('stripecom_custom_domain'))), '/');
-        $this->stripecom_wallet_address = sanitize_text_field($this->get_option('stripecom_wallet_address'));
+        $this->cryptixio_custom_domain = rtrim(str_replace(['https://','http://'], '', sanitize_text_field($this->get_option('cryptixio_custom_domain'))), '/');
+        $this->cryptixio_wallet_address = sanitize_text_field($this->get_option('cryptixio_wallet_address'));
         $this->icon_url     = sanitize_url($this->get_option('icon_url'));
 
         add_action('woocommerce_update_options_payment_gateways_' . $this->id, array($this, 'process_admin_options'));
@@ -42,31 +42,31 @@ class shieldclimb_Instant_Payment_Gateway_Stripe extends WC_Payment_Gateway {
             'enabled' => array(
                 'title'   => esc_html__('Enable/Disable', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping title
                 'type'    => 'checkbox',
-                'label'   => esc_html__('Enable stripe.com payment gateway', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping label
+                'label'   => esc_html__('Enable cryptix.io payment gateway', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping label
                 'default' => 'no',
             ),
             'title' => array(
                 'title'       => esc_html__('Title', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping title
                 'type'        => 'text',
                 'description' => esc_html__('Payment method title that users will see during checkout.', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping description
-                'default'     => esc_html__('Pay with Stripe (US) (Credit Card)', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping default value
+                'default'     => esc_html__('Pay with Cryptix (Credit Card)', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping default value
                 'desc_tip'    => true,
             ),
             'description' => array(
                 'title'       => esc_html__('Description', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping title
                 'type'        => 'textarea',
                 'description' => esc_html__('Payment method description that users will see during checkout.', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping description
-                'default'     => esc_html__('Credit Card Crypto On-Ramp (via Stripe (US))', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping default value
+                'default'     => esc_html__('Credit Card Crypto On-Ramp (via Cryptix)', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping default value
                 'desc_tip'    => true,
             ),
-            'stripecom_custom_domain' => array(
+            'cryptixio_custom_domain' => array(
                 'title'       => esc_html__('Custom Domain', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping title
                 'type'        => 'text',
                 'description' => esc_html__('Follow the custom domain guide to use your own domain name for the checkout pages and links.', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping description
                 'default'     => esc_html__('payment.shieldclimb.com', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping default value
                 'desc_tip'    => true,
             ),
-            'stripecom_wallet_address' => array(
+            'cryptixio_wallet_address' => array(
                 'title'       => esc_html__('Wallet Address', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping title
                 'type'        => 'text',
                 'description' => esc_html__('Insert your USDC (Polygon) wallet address to receive instant payouts. Payouts maybe sent in ETH or USDC or USDT (Polygon or BEP-20) or POL native token. Same wallet should work to receive all. Make sure you use a self-custodial wallet to receive payouts.', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping description
@@ -86,16 +86,16 @@ class shieldclimb_Instant_Payment_Gateway_Stripe extends WC_Payment_Gateway {
     WC_Admin_Settings::add_error(__('Nonce verification failed. Please try again.', 'shieldclimb-high-risk-card-payment-gateway'));
     return false;
 }
-        $stripecom_admin_wallet_address = isset($_POST[$this->plugin_id . $this->id . '_stripecom_wallet_address']) ? sanitize_text_field( wp_unslash( $_POST[$this->plugin_id . $this->id . '_stripecom_wallet_address'])) : '';
+        $cryptixio_admin_wallet_address = isset($_POST[$this->plugin_id . $this->id . '_cryptixio_wallet_address']) ? sanitize_text_field( wp_unslash( $_POST[$this->plugin_id . $this->id . '_cryptixio_wallet_address'])) : '';
 
         // Check if wallet address starts with "0x"
-        if (substr($stripecom_admin_wallet_address, 0, 2) !== '0x') {
+        if (substr($cryptixio_admin_wallet_address, 0, 2) !== '0x') {
             WC_Admin_Settings::add_error(__('Invalid Wallet Address: Please insert your USDC Polygon wallet address.', 'shieldclimb-high-risk-card-payment-gateway'));
             return false;
         }
 
         // Check if wallet address matches the USDC contract address
-        if (strtolower($stripecom_admin_wallet_address) === '0x3c499c542cef5e3811e1192ce70d8cc03d5c3359') {
+        if (strtolower($cryptixio_admin_wallet_address) === '0x3c499c542cef5e3811e1192ce70d8cc03d5c3359') {
             WC_Admin_Settings::add_error(__('Invalid Wallet Address: Please insert your USDC Polygon wallet address.', 'shieldclimb-high-risk-card-payment-gateway'));
             return false;
         }
@@ -105,32 +105,32 @@ class shieldclimb_Instant_Payment_Gateway_Stripe extends WC_Payment_Gateway {
     }
     public function process_payment($order_id) {
         $order = wc_get_order($order_id);
-        $shieldclimbgateway_stripecom_currency = get_woocommerce_currency();
-		$shieldclimbgateway_stripecom_total = $order->get_total();
-		$shieldclimbgateway_stripecom_nonce = wp_create_nonce( 'shieldclimbgateway_stripecom_nonce_' . $order_id );
-		$shieldclimbgateway_stripecom_callback = add_query_arg(array('order_id' => $order_id, 'nonce' => $shieldclimbgateway_stripecom_nonce,), rest_url('shieldclimbgateway/v1/shieldclimbgateway-stripecom/'));
-		$shieldclimbgateway_stripecom_email = urlencode(sanitize_email($order->get_billing_email()));
+        $shieldclimbgateway_cryptixio_currency = get_woocommerce_currency();
+		$shieldclimbgateway_cryptixio_total = $order->get_total();
+		$shieldclimbgateway_cryptixio_nonce = wp_create_nonce( 'shieldclimbgateway_cryptixio_nonce_' . $order_id );
+		$shieldclimbgateway_cryptixio_callback = add_query_arg(array('order_id' => $order_id, 'nonce' => $shieldclimbgateway_cryptixio_nonce,), rest_url('shieldclimbgateway/v1/shieldclimbgateway-cryptixio/'));
+		$shieldclimbgateway_cryptixio_email = urlencode(sanitize_email($order->get_billing_email()));
 		
-		if ($shieldclimbgateway_stripecom_currency === 'USD') {
-        $shieldclimbgateway_stripecom_final_total = $shieldclimbgateway_stripecom_total;
-		$shieldclimbgateway_stripecom_reference_total = (float)$shieldclimbgateway_stripecom_final_total;
+		if ($shieldclimbgateway_cryptixio_currency === 'USD') {
+        $shieldclimbgateway_cryptixio_final_total = $shieldclimbgateway_cryptixio_total;
+		$shieldclimbgateway_cryptixio_reference_total = (float)$shieldclimbgateway_cryptixio_final_total;
 		} else {
 		
-$shieldclimbgateway_stripecom_response = wp_remote_get('https://api.shieldclimb.com/control/convert.php?value=' . $shieldclimbgateway_stripecom_total . '&from=' . strtolower($shieldclimbgateway_stripecom_currency), array('timeout' => 30));
+$shieldclimbgateway_cryptixio_response = wp_remote_get('https://api.shieldclimb.com/control/convert.php?value=' . $shieldclimbgateway_cryptixio_total . '&from=' . strtolower($shieldclimbgateway_cryptixio_currency), array('timeout' => 30));
 
-if (is_wp_error($shieldclimbgateway_stripecom_response)) {
+if (is_wp_error($shieldclimbgateway_cryptixio_response)) {
     // Handle error
     shieldclimbgateway_add_notice(__('Payment error:', 'shieldclimb-high-risk-card-payment-gateway') . __('Payment could not be processed due to failed currency conversion process, please try again', 'shieldclimb-high-risk-card-payment-gateway'), 'error');
     return null;
 } else {
 
-$shieldclimbgateway_stripecom_body = wp_remote_retrieve_body($shieldclimbgateway_stripecom_response);
-$shieldclimbgateway_stripecom_conversion_resp = json_decode($shieldclimbgateway_stripecom_body, true);
+$shieldclimbgateway_cryptixio_body = wp_remote_retrieve_body($shieldclimbgateway_cryptixio_response);
+$shieldclimbgateway_cryptixio_conversion_resp = json_decode($shieldclimbgateway_cryptixio_body, true);
 
-if ($shieldclimbgateway_stripecom_conversion_resp && isset($shieldclimbgateway_stripecom_conversion_resp['value_coin'])) {
+if ($shieldclimbgateway_cryptixio_conversion_resp && isset($shieldclimbgateway_cryptixio_conversion_resp['value_coin'])) {
     // Escape output
-    $shieldclimbgateway_stripecom_final_total	= sanitize_text_field($shieldclimbgateway_stripecom_conversion_resp['value_coin']);
-    $shieldclimbgateway_stripecom_reference_total = (float)$shieldclimbgateway_stripecom_final_total;	
+    $shieldclimbgateway_cryptixio_final_total	= sanitize_text_field($shieldclimbgateway_cryptixio_conversion_resp['value_coin']);
+    $shieldclimbgateway_cryptixio_reference_total = (float)$shieldclimbgateway_cryptixio_final_total;	
 } else {
     shieldclimbgateway_add_notice(__('Payment error:', 'shieldclimb-high-risk-card-payment-gateway') . __('Payment could not be processed, please try again (unsupported store currency)', 'shieldclimb-high-risk-card-payment-gateway'), 'error');
     return null;
@@ -138,34 +138,34 @@ if ($shieldclimbgateway_stripecom_conversion_resp && isset($shieldclimbgateway_s
 		}
 		}
 		
-if ($shieldclimbgateway_stripecom_reference_total < 2) {
-shieldclimbgateway_add_notice(__('Payment error:', 'shieldclimb-high-risk-card-payment-gateway') . __('Order total for this payment provider must be $2 USD or more.', 'shieldclimb-high-risk-card-payment-gateway'), 'error');
+if ($shieldclimbgateway_cryptixio_reference_total < 20) {
+shieldclimbgateway_add_notice(__('Payment error:', 'shieldclimb-high-risk-card-payment-gateway') . __('Order total for this payment provider must be $20 USD or more.', 'shieldclimb-high-risk-card-payment-gateway'), 'error');
 return null;
 }	
 		
-$shieldclimbgateway_stripecom_gen_wallet = wp_remote_get('https://api.shieldclimb.com/control/wallet.php?address=' . $this->stripecom_wallet_address .'&callback=' . urlencode($shieldclimbgateway_stripecom_callback), array('timeout' => 30));
+$shieldclimbgateway_cryptixio_gen_wallet = wp_remote_get('https://api.shieldclimb.com/control/wallet.php?address=' . $this->cryptixio_wallet_address .'&callback=' . urlencode($shieldclimbgateway_cryptixio_callback), array('timeout' => 30));
 
-if (is_wp_error($shieldclimbgateway_stripecom_gen_wallet)) {
+if (is_wp_error($shieldclimbgateway_cryptixio_gen_wallet)) {
     // Handle error
     shieldclimbgateway_add_notice(__('Wallet error:', 'shieldclimb-high-risk-card-payment-gateway') . __('Payment could not be processed due to incorrect payout wallet settings, please contact website admin', 'shieldclimb-high-risk-card-payment-gateway'), 'error');
     return null;
 } else {
-	$shieldclimbgateway_stripecom_wallet_body = wp_remote_retrieve_body($shieldclimbgateway_stripecom_gen_wallet);
-	$shieldclimbgateway_stripecom_wallet_decbody = json_decode($shieldclimbgateway_stripecom_wallet_body, true);
+	$shieldclimbgateway_cryptixio_wallet_body = wp_remote_retrieve_body($shieldclimbgateway_cryptixio_gen_wallet);
+	$shieldclimbgateway_cryptixio_wallet_decbody = json_decode($shieldclimbgateway_cryptixio_wallet_body, true);
 
  // Check if decoding was successful
-    if ($shieldclimbgateway_stripecom_wallet_decbody && isset($shieldclimbgateway_stripecom_wallet_decbody['address_in'])) {
+    if ($shieldclimbgateway_cryptixio_wallet_decbody && isset($shieldclimbgateway_cryptixio_wallet_decbody['address_in'])) {
         // Store the address_in as a variable
-        $shieldclimbgateway_stripecom_gen_addressIn = wp_kses_post($shieldclimbgateway_stripecom_wallet_decbody['address_in']);
-        $shieldclimbgateway_stripecom_gen_polygon_addressIn = sanitize_text_field($shieldclimbgateway_stripecom_wallet_decbody['polygon_address_in']);
-		$shieldclimbgateway_stripecom_gen_callback = sanitize_url($shieldclimbgateway_stripecom_wallet_decbody['callback_url']);
-		// Save $stripecomresponse in order meta data
-    $order->add_meta_data('shieldclimb_stripecom_tracking_address', $shieldclimbgateway_stripecom_gen_addressIn, true);
-    $order->add_meta_data('shieldclimb_stripecom_polygon_temporary_order_wallet_address', $shieldclimbgateway_stripecom_gen_polygon_addressIn, true);
-    $order->add_meta_data('shieldclimb_stripecom_callback', $shieldclimbgateway_stripecom_gen_callback, true);
-	$order->add_meta_data('shieldclimb_stripecom_converted_amount', $shieldclimbgateway_stripecom_final_total, true);
-	$order->add_meta_data('shieldclimb_stripecom_expected_amount', $shieldclimbgateway_stripecom_reference_total, true);
-	$order->add_meta_data('shieldclimb_stripecom_nonce', $shieldclimbgateway_stripecom_nonce, true);
+        $shieldclimbgateway_cryptixio_gen_addressIn = wp_kses_post($shieldclimbgateway_cryptixio_wallet_decbody['address_in']);
+        $shieldclimbgateway_cryptixio_gen_polygon_addressIn = sanitize_text_field($shieldclimbgateway_cryptixio_wallet_decbody['polygon_address_in']);
+		$shieldclimbgateway_cryptixio_gen_callback = sanitize_url($shieldclimbgateway_cryptixio_wallet_decbody['callback_url']);
+		// Save $cryptixioresponse in order meta data
+    $order->add_meta_data('shieldclimb_cryptixio_tracking_address', $shieldclimbgateway_cryptixio_gen_addressIn, true);
+    $order->add_meta_data('shieldclimb_cryptixio_polygon_temporary_order_wallet_address', $shieldclimbgateway_cryptixio_gen_polygon_addressIn, true);
+    $order->add_meta_data('shieldclimb_cryptixio_callback', $shieldclimbgateway_cryptixio_gen_callback, true);
+	$order->add_meta_data('shieldclimb_cryptixio_converted_amount', $shieldclimbgateway_cryptixio_final_total, true);
+	$order->add_meta_data('shieldclimb_cryptixio_expected_amount', $shieldclimbgateway_cryptixio_reference_total, true);
+	$order->add_meta_data('shieldclimb_cryptixio_nonce', $shieldclimbgateway_cryptixio_nonce, true);
     $order->save();
     } else {
         shieldclimbgateway_add_notice(__('Payment error:', 'shieldclimb-high-risk-card-payment-gateway') . __('Payment could not be processed, please try again (wallet address error)', 'shieldclimb-high-risk-card-payment-gateway'), 'error');
@@ -183,7 +183,7 @@ if (shieldclimbgateway_is_checkout_block()) {
         // Redirect to payment page
         return array(
             'result'   => 'success',
-            'redirect' => 'https://' . $this->stripecom_custom_domain . '/process-payment.php?address=' . $shieldclimbgateway_stripecom_gen_addressIn . '&amount=' . (float)$shieldclimbgateway_stripecom_final_total . '&provider=stripe&email=' . $shieldclimbgateway_stripecom_email . '&currency=USD',
+            'redirect' => 'https://' . $this->cryptixio_custom_domain . '/process-payment.php?address=' . $shieldclimbgateway_cryptixio_gen_addressIn . '&amount=' . (float)$shieldclimbgateway_cryptixio_total . '&provider=cryptix&email=' . $shieldclimbgateway_cryptixio_email . '&currency=' . $shieldclimbgateway_cryptixio_currency,
         );
     }
 
@@ -192,31 +192,31 @@ public function shieldclimb_instant_payment_gateway_get_icon_url() {
     }
 }
 
-function shieldclimbgateway_add_instant_payment_gateway_stripecom($gateways) {
-    $gateways[] = 'shieldclimb_Instant_Payment_Gateway_Stripe';
+function shieldclimbgateway_add_instant_payment_gateway_cryptixio($gateways) {
+    $gateways[] = 'shieldclimb_Instant_Payment_Gateway_Cryptix';
     return $gateways;
 }
-add_filter('woocommerce_payment_gateways', 'shieldclimbgateway_add_instant_payment_gateway_stripecom');
+add_filter('woocommerce_payment_gateways', 'shieldclimbgateway_add_instant_payment_gateway_cryptixio');
 }
 
 // Add custom endpoint for changing order status
-function shieldclimbgateway_stripecom_change_order_status_rest_endpoint() {
+function shieldclimbgateway_cryptixio_change_order_status_rest_endpoint() {
     // Register custom route
-    register_rest_route( 'shieldclimbgateway/v1', '/shieldclimbgateway-stripecom/', array(
+    register_rest_route( 'shieldclimbgateway/v1', '/shieldclimbgateway-cryptixio/', array(
         'methods'  => 'GET',
-        'callback' => 'shieldclimbgateway_stripecom_change_order_status_callback',
+        'callback' => 'shieldclimbgateway_cryptixio_change_order_status_callback',
         'permission_callback' => '__return_true',
     ));
 }
-add_action( 'rest_api_init', 'shieldclimbgateway_stripecom_change_order_status_rest_endpoint' );
+add_action( 'rest_api_init', 'shieldclimbgateway_cryptixio_change_order_status_rest_endpoint' );
 
 // Callback function to change order status
-function shieldclimbgateway_stripecom_change_order_status_callback( $request ) {
+function shieldclimbgateway_cryptixio_change_order_status_callback( $request ) {
     $order_id = absint($request->get_param( 'order_id' ));
-	$shieldclimbgateway_stripecomgetnonce = sanitize_text_field($request->get_param( 'nonce' ));
-	$shieldclimbgateway_stripecompaid_txid_out = sanitize_text_field($request->get_param('txid_out'));
-	$shieldclimbgateway_stripecompaid_value_coin = sanitize_text_field($request->get_param('value_coin'));
-	$shieldclimbgateway_stripecomfloatpaid_value_coin = (float)$shieldclimbgateway_stripecompaid_value_coin;
+	$shieldclimbgateway_cryptixiogetnonce = sanitize_text_field($request->get_param( 'nonce' ));
+	$shieldclimbgateway_cryptixiopaid_txid_out = sanitize_text_field($request->get_param('txid_out'));
+	$shieldclimbgateway_cryptixiopaid_value_coin = sanitize_text_field($request->get_param('value_coin'));
+	$shieldclimbgateway_cryptixiofloatpaid_value_coin = (float)$shieldclimbgateway_cryptixiopaid_value_coin;
 
     // Check if order ID parameter exists
     if ( empty( $order_id ) ) {
@@ -232,26 +232,26 @@ function shieldclimbgateway_stripecom_change_order_status_callback( $request ) {
     }
 	
 	// Verify nonce
-    if ( empty( $shieldclimbgateway_stripecomgetnonce ) || $order->get_meta('shieldclimb_stripecom_nonce', true) !== $shieldclimbgateway_stripecomgetnonce ) {
+    if ( empty( $shieldclimbgateway_cryptixiogetnonce ) || $order->get_meta('shieldclimb_cryptixio_nonce', true) !== $shieldclimbgateway_cryptixiogetnonce ) {
         return new WP_Error( 'invalid_nonce', __( 'Invalid nonce.', 'shieldclimb-high-risk-card-payment-gateway' ), array( 'status' => 403 ) );
     }
 
-    // Check if the order is pending and payment method is 'shieldclimb-stripe'
-    if ( $order && $order->get_status() !== 'processing' && $order->get_status() !== 'completed' && 'shieldclimb-stripe' === $order->get_payment_method() ) {
-	$shieldclimbgateway_stripecomexpected_amount = (float)$order->get_meta('shieldclimb_stripecom_expected_amount', true);
-	$shieldclimbgateway_stripecomthreshold = 0.60 * $shieldclimbgateway_stripecomexpected_amount;
-		if ( $shieldclimbgateway_stripecomfloatpaid_value_coin < $shieldclimbgateway_stripecomthreshold ) {
+    // Check if the order is pending and payment method is 'shieldclimb-cryptix'
+    if ( $order && $order->get_status() !== 'processing' && $order->get_status() !== 'completed' && 'shieldclimb-cryptix' === $order->get_payment_method() ) {
+	$shieldclimbgateway_cryptixioexpected_amount = (float)$order->get_meta('shieldclimb_cryptixio_expected_amount', true);
+	$shieldclimbgateway_cryptixiothreshold = 0.60 * $shieldclimbgateway_cryptixioexpected_amount;
+		if ( $shieldclimbgateway_cryptixiofloatpaid_value_coin < $shieldclimbgateway_cryptixiothreshold ) {
 			// Mark the order as failed and add an order note
             $order->update_status('failed', __( 'Payment received is less than 60% of the order total. Customer may have changed the payment values on the checkout page.', 'shieldclimb-high-risk-card-payment-gateway' ));
             /* translators: 1: Transaction ID */
-            $order->add_order_note(sprintf( __( 'Order marked as failed: Payment received is less than 60%% of the order total. Customer may have changed the payment values on the checkout page. TXID: %1$s', 'shieldclimb-high-risk-card-payment-gateway' ), $shieldclimbgateway_stripecompaid_txid_out));
+            $order->add_order_note(sprintf( __( 'Order marked as failed: Payment received is less than 60%% of the order total. Customer may have changed the payment values on the checkout page. TXID: %1$s', 'shieldclimb-high-risk-card-payment-gateway' ), $shieldclimbgateway_cryptixiopaid_txid_out));
             return array( 'message' => 'Order status changed to failed due to partial payment.' );
 			
 		} else {
         // Change order status to processing
 		$order->payment_complete();
 		/* translators: 1: Transaction ID */
-		$order->add_order_note( sprintf(__('Payment completed by the provider TXID: %1$s', 'shieldclimb-high-risk-card-payment-gateway'), $shieldclimbgateway_stripecompaid_txid_out) );
+		$order->add_order_note( sprintf(__('Payment completed by the provider TXID: %1$s', 'shieldclimb-high-risk-card-payment-gateway'), $shieldclimbgateway_cryptixiopaid_txid_out) );
         // Return success response
         return array( 'message' => 'Order marked as paid and status changed.' );
 		}

@@ -3,9 +3,9 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-add_action('plugins_loaded', 'shieldclimbgateway_revolut_gateway');
+add_action('plugins_loaded', 'init_shieldclimbgateway_revolut_gateway');
 
-function shieldclimbgateway_revolut_gateway() {
+function init_shieldclimbgateway_revolut_gateway() {
     if (!class_exists('WC_Payment_Gateway')) {
         return;
     }
@@ -15,11 +15,12 @@ class shieldclimb_Instant_Payment_Gateway_Revolut extends WC_Payment_Gateway {
 
     protected $icon_url;
     protected $revolutcom_wallet_address;
+    protected $revolutcom_custom_domain;
 
     public function __construct() {
-        $this->id                 = 'shieldclimb-instant-payment-gateway-revolut';
+        $this->id                 = 'shieldclimb-revolut';
         $this->icon = sanitize_url($this->get_option('icon_url'));
-        $this->method_title       = esc_html__('ShieldClimb – revolut.com | Min USD15 | Auto Hide If Below Min', 'shieldclimb-high-risk-card-payment-gateway'); // Escaping title
+        $this->method_title       = esc_html__('ShieldClimb – revolut (EU/EEA only) | Min EUR6', 'shieldclimb-high-risk-card-payment-gateway'); // Escaping title
         $this->method_description = esc_html__('High Risk Business Card Payment Gateway with Chargeback Protection and Instant USDC POLYGON Wallet Payouts using revolut.com infrastructure', 'shieldclimb-high-risk-card-payment-gateway'); // Escaping description
         $this->has_fields         = false;
 
@@ -30,6 +31,7 @@ class shieldclimb_Instant_Payment_Gateway_Revolut extends WC_Payment_Gateway {
         $this->description = sanitize_text_field($this->get_option('description'));
 
         // Use the configured settings for redirect and icon URLs
+        $this->revolutcom_custom_domain = rtrim(str_replace(['https://','http://'], '', sanitize_text_field($this->get_option('revolutcom_custom_domain'))), '/');
         $this->revolutcom_wallet_address = sanitize_text_field($this->get_option('revolutcom_wallet_address'));
         $this->icon_url     = sanitize_url($this->get_option('icon_url'));
 
@@ -48,20 +50,27 @@ class shieldclimb_Instant_Payment_Gateway_Revolut extends WC_Payment_Gateway {
                 'title'       => esc_html__('Title', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping title
                 'type'        => 'text',
                 'description' => esc_html__('Payment method title that users will see during checkout.', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping description
-                'default'     => esc_html__('Credit Card', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping default value
+                'default'     => esc_html__('Pay with Revolut (EU/EEA) (Credit Card)', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping default value
                 'desc_tip'    => true,
             ),
             'description' => array(
                 'title'       => esc_html__('Description', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping title
                 'type'        => 'textarea',
                 'description' => esc_html__('Payment method description that users will see during checkout.', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping description
-                'default'     => esc_html__('Pay via credit card', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping default value
+                'default'     => esc_html__('Credit Card Crypto On-Ramp (via Revolut (EU/EEA))', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping default value
+                'desc_tip'    => true,
+            ),
+            'revolutcom_custom_domain' => array(
+                'title'       => esc_html__('Custom Domain', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping title
+                'type'        => 'text',
+                'description' => esc_html__('Follow the custom domain guide to use your own domain name for the checkout pages and links.', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping description
+                'default'     => esc_html__('payment.shieldclimb.com', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping default value
                 'desc_tip'    => true,
             ),
             'revolutcom_wallet_address' => array(
                 'title'       => esc_html__('Wallet Address', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping title
                 'type'        => 'text',
-                'description' => esc_html__('Insert your USDC (Polygon) wallet address to receive instant payouts. Payouts maybe sent in USDC or USDT (Polygon or BEP-20) or POL native token. Same wallet should work to receive all. Make sure you use a self-custodial wallet to receive payouts.', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping description
+                'description' => esc_html__('Insert your USDC (Polygon) wallet address to receive instant payouts. Payouts maybe sent in ETH or USDC or USDT (Polygon or BEP-20) or POL native token. Same wallet should work to receive all. Make sure you use a self-custodial wallet to receive payouts.', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping description
                 'desc_tip'    => true,
             ),
             'icon_url' => array(
@@ -174,7 +183,7 @@ if (shieldclimbgateway_is_checkout_block()) {
         // Redirect to payment page
         return array(
             'result'   => 'success',
-            'redirect' => 'https://payment.shieldclimb.com/process-payment.php?address=' . $shieldclimbgateway_revolutcom_gen_addressIn . '&amount=' . (float)$shieldclimbgateway_revolutcom_final_total . '&provider=revolut&email=' . $shieldclimbgateway_revolutcom_email . '&currency=' . $shieldclimbgateway_revolutcom_currency,
+            'redirect' => 'https://' . $this->revolutcom_custom_domain . '/process-payment.php?address=' . $shieldclimbgateway_revolutcom_gen_addressIn . '&amount=' . (float)$shieldclimbgateway_revolutcom_final_total . '&provider=revolut&email=' . $shieldclimbgateway_revolutcom_email . '&currency=' . $shieldclimbgateway_revolutcom_currency,
         );
     }
 
@@ -183,11 +192,11 @@ public function shieldclimb_instant_payment_gateway_get_icon_url() {
     }
 }
 
-function shieldclimb_add_instant_payment_gateway_revolut($gateways) {
+function shieldclimbgateway_add_instant_payment_gateway_revolut($gateways) {
     $gateways[] = 'shieldclimb_Instant_Payment_Gateway_Revolut';
     return $gateways;
 }
-add_filter('woocommerce_payment_gateways', 'shieldclimb_add_instant_payment_gateway_revolut');
+add_filter('woocommerce_payment_gateways', 'shieldclimbgateway_add_instant_payment_gateway_revolut');
 }
 
 // Add custom endpoint for changing order status
@@ -225,8 +234,8 @@ function shieldclimbgateway_revolutcom_change_order_status_callback( $request ) 
         return new WP_Error( 'invalid_nonce', __( 'Invalid nonce.', 'shieldclimb-high-risk-card-payment-gateway' ), array( 'status' => 403 ) );
     }
 
-    // Check if the order is pending and payment method is 'shieldclimb-instant-payment-gateway-revolut'
-    if ( $order && $order->get_status() !== 'processing' && $order->get_status() !== 'completed' && 'shieldclimb-instant-payment-gateway-revolut' === $order->get_payment_method() ) {
+    // Check if the order is pending and payment method is 'shieldclimb-revolut'
+    if ( $order && $order->get_status() !== 'processing' && $order->get_status() !== 'completed' && 'shieldclimb-revolut' === $order->get_payment_method() ) {
         // Change order status to processing
 		$order->payment_complete();
 		/* translators: 1: Transaction ID */
