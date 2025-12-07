@@ -69,11 +69,14 @@ Anyone can use our plugin, but businesses listed in our **[Prohibited Business L
 
 ## 📜 Changelog
 
+### V1.2.9
+
+- Bug Fixed and Re-added: Hosted checkout with multiple providers
+
 ### V1.2.8
 
 - Updated: Payment providers list
 - Fixed: Bug
-
 
 ### V1.2.7
 
