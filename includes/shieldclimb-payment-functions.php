@@ -47,7 +47,6 @@ function shieldclimbgateway_hide_payment_methods($available_gateways) {
         'shieldclimb-unlimit' => 10,
         'shieldclimb-bitnovo' => 10,
         'shieldclimb-guardarian' => 20,
-        'shieldclimb-mercuryo' => 15,
         'shieldclimb-sardine' => 30,
         'shieldclimb-transak' => 15,
         'shieldclimb-simplex' => 50,
@@ -58,6 +57,7 @@ function shieldclimbgateway_hide_payment_methods($available_gateways) {
         'shieldclimb-topper' => 10,
         'shieldclimb-binance' => 15,
         'shieldclimb-utorg' => 50,
+        'shieldclimb-revolut' => 8,
         'shieldclimb-transfi' => 70
     ];
 

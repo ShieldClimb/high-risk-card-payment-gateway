@@ -69,6 +69,12 @@ Anyone can use our plugin, but businesses listed in our **[Prohibited Business L
 
 ## 📜 Changelog
 
+### V1.2.8
+
+- Updated: Payment providers list
+- Fixed: Bug
+
+
 ### V1.2.7
 
 - Updated: Tested up to WordPress 6.9 & WooCommerce 10.3.6

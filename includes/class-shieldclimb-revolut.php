@@ -3,13 +3,12 @@ if (!defined('ABSPATH')) {
     exit;
 }
 
-add_action('plugins_loaded', 'init_shieldclimbgateway_revolut_gateway');
+add_action('plugins_loaded', 'init_shieldclimbgateway_revolutcom_gateway');
 
-function init_shieldclimbgateway_revolut_gateway() {
+function init_shieldclimbgateway_revolutcom_gateway() {
     if (!class_exists('WC_Payment_Gateway')) {
         return;
     }
-
 
 class shieldclimb_Instant_Payment_Gateway_Revolut extends WC_Payment_Gateway {
 
@@ -111,27 +110,27 @@ class shieldclimb_Instant_Payment_Gateway_Revolut extends WC_Payment_Gateway {
 		$shieldclimbgateway_revolutcom_nonce = wp_create_nonce( 'shieldclimbgateway_revolutcom_nonce_' . $order_id );
 		$shieldclimbgateway_revolutcom_callback = add_query_arg(array('order_id' => $order_id, 'nonce' => $shieldclimbgateway_revolutcom_nonce,), rest_url('shieldclimbgateway/v1/shieldclimbgateway-revolutcom/'));
 		$shieldclimbgateway_revolutcom_email = urlencode(sanitize_email($order->get_billing_email()));
-		$shieldclimbgateway_revolutcom_final_total = $shieldclimbgateway_revolutcom_total;
-
-if ($shieldclimbgateway_revolutcom_currency === 'USD') {
-        $shieldclimbgateway_revolutcom_minimumcheck = $shieldclimbgateway_revolutcom_total;
+		
+		if ($shieldclimbgateway_revolutcom_currency === 'USD') {
+        $shieldclimbgateway_revolutcom_final_total = $shieldclimbgateway_revolutcom_total;
+		$shieldclimbgateway_revolutcom_reference_total = (float)$shieldclimbgateway_revolutcom_final_total;
 		} else {
 		
-$shieldclimbgateway_revolutcom_minimumcheck_response = wp_remote_get('https://api.shieldclimb.com/control/convert.php?value=' . $shieldclimbgateway_revolutcom_total . '&from=' . strtolower($shieldclimbgateway_revolutcom_currency), array('timeout' => 30));
+$shieldclimbgateway_revolutcom_response = wp_remote_get('https://api.shieldclimb.com/control/convert.php?value=' . $shieldclimbgateway_revolutcom_total . '&from=' . strtolower($shieldclimbgateway_revolutcom_currency), array('timeout' => 30));
 
-if (is_wp_error($shieldclimbgateway_revolutcom_minimumcheck_response)) {
+if (is_wp_error($shieldclimbgateway_revolutcom_response)) {
     // Handle error
     shieldclimbgateway_add_notice(__('Payment error:', 'shieldclimb-high-risk-card-payment-gateway') . __('Payment could not be processed due to failed currency conversion process, please try again', 'shieldclimb-high-risk-card-payment-gateway'), 'error');
     return null;
 } else {
 
-$shieldclimbgateway_revolutcom_minimumcheck_body = wp_remote_retrieve_body($shieldclimbgateway_revolutcom_minimumcheck_response);
-$shieldclimbgateway_revolutcom_minimum_conversion_resp = json_decode($shieldclimbgateway_revolutcom_minimumcheck_body, true);
+$shieldclimbgateway_revolutcom_body = wp_remote_retrieve_body($shieldclimbgateway_revolutcom_response);
+$shieldclimbgateway_revolutcom_conversion_resp = json_decode($shieldclimbgateway_revolutcom_body, true);
 
-if ($shieldclimbgateway_revolutcom_minimum_conversion_resp && isset($shieldclimbgateway_revolutcom_minimum_conversion_resp['value_coin'])) {
+if ($shieldclimbgateway_revolutcom_conversion_resp && isset($shieldclimbgateway_revolutcom_conversion_resp['value_coin'])) {
     // Escape output
-    $shieldclimbgateway_revolutcom_minimum_conversion_total	= sanitize_text_field($shieldclimbgateway_revolutcom_minimum_conversion_resp['value_coin']);
-    $shieldclimbgateway_revolutcom_minimumcheck = (float)$shieldclimbgateway_revolutcom_minimum_conversion_total;	
+    $shieldclimbgateway_revolutcom_final_total	= sanitize_text_field($shieldclimbgateway_revolutcom_conversion_resp['value_coin']);
+    $shieldclimbgateway_revolutcom_reference_total = (float)$shieldclimbgateway_revolutcom_final_total;	
 } else {
     shieldclimbgateway_add_notice(__('Payment error:', 'shieldclimb-high-risk-card-payment-gateway') . __('Payment could not be processed, please try again (unsupported store currency)', 'shieldclimb-high-risk-card-payment-gateway'), 'error');
     return null;
@@ -139,11 +138,11 @@ if ($shieldclimbgateway_revolutcom_minimum_conversion_resp && isset($shieldclimb
 		}
 		}
 		
-if ($shieldclimbgateway_revolutcom_minimumcheck < 15) {
-shieldclimbgateway_add_notice(__('Payment error:', 'shieldclimb-high-risk-card-payment-gateway') . __('Order total for this payment provider must be $15 USD or more.', 'shieldclimb-high-risk-card-payment-gateway'), 'error');
+if ($shieldclimbgateway_revolutcom_reference_total < 8) {
+shieldclimbgateway_add_notice(__('Payment error:', 'shieldclimb-high-risk-card-payment-gateway') . __('Order total for this payment provider must be $8 USD or more.', 'shieldclimb-high-risk-card-payment-gateway'), 'error');
 return null;
-}
-	
+}	
+		
 $shieldclimbgateway_revolutcom_gen_wallet = wp_remote_get('https://api.shieldclimb.com/control/wallet.php?address=' . $this->revolutcom_wallet_address .'&callback=' . urlencode($shieldclimbgateway_revolutcom_callback), array('timeout' => 30));
 
 if (is_wp_error($shieldclimbgateway_revolutcom_gen_wallet)) {
@@ -165,6 +164,7 @@ if (is_wp_error($shieldclimbgateway_revolutcom_gen_wallet)) {
     $order->add_meta_data('shieldclimb_revolutcom_polygon_temporary_order_wallet_address', $shieldclimbgateway_revolutcom_gen_polygon_addressIn, true);
     $order->add_meta_data('shieldclimb_revolutcom_callback', $shieldclimbgateway_revolutcom_gen_callback, true);
 	$order->add_meta_data('shieldclimb_revolutcom_converted_amount', $shieldclimbgateway_revolutcom_final_total, true);
+	$order->add_meta_data('shieldclimb_revolutcom_expected_amount', $shieldclimbgateway_revolutcom_reference_total, true);
 	$order->add_meta_data('shieldclimb_revolutcom_nonce', $shieldclimbgateway_revolutcom_nonce, true);
     $order->save();
     } else {
@@ -183,7 +183,7 @@ if (shieldclimbgateway_is_checkout_block()) {
         // Redirect to payment page
         return array(
             'result'   => 'success',
-            'redirect' => 'https://' . $this->revolutcom_custom_domain . '/process-payment.php?address=' . $shieldclimbgateway_revolutcom_gen_addressIn . '&amount=' . (float)$shieldclimbgateway_revolutcom_final_total . '&provider=revolut&email=' . $shieldclimbgateway_revolutcom_email . '&currency=' . $shieldclimbgateway_revolutcom_currency,
+            'redirect' => 'https://' . $this->revolutcom_custom_domain . '/process-payment.php?address=' . $shieldclimbgateway_revolutcom_gen_addressIn . '&amount=' . (float)$shieldclimbgateway_revolutcom_total . '&provider=revolut&email=' . $shieldclimbgateway_revolutcom_email . '&currency=' . $shieldclimbgateway_revolutcom_currency,
         );
     }
 
@@ -192,11 +192,11 @@ public function shieldclimb_instant_payment_gateway_get_icon_url() {
     }
 }
 
-function shieldclimbgateway_add_instant_payment_gateway_revolut($gateways) {
+function shieldclimbgateway_add_instant_payment_gateway_revolutcom($gateways) {
     $gateways[] = 'shieldclimb_Instant_Payment_Gateway_Revolut';
     return $gateways;
 }
-add_filter('woocommerce_payment_gateways', 'shieldclimbgateway_add_instant_payment_gateway_revolut');
+add_filter('woocommerce_payment_gateways', 'shieldclimbgateway_add_instant_payment_gateway_revolutcom');
 }
 
 // Add custom endpoint for changing order status
@@ -215,6 +215,8 @@ function shieldclimbgateway_revolutcom_change_order_status_callback( $request ) 
     $order_id = absint($request->get_param( 'order_id' ));
 	$shieldclimbgateway_revolutcomgetnonce = sanitize_text_field($request->get_param( 'nonce' ));
 	$shieldclimbgateway_revolutcompaid_txid_out = sanitize_text_field($request->get_param('txid_out'));
+	$shieldclimbgateway_revolutcompaid_value_coin = sanitize_text_field($request->get_param('value_coin'));
+	$shieldclimbgateway_revolutcomfloatpaid_value_coin = (float)$shieldclimbgateway_revolutcompaid_value_coin;
 
     // Check if order ID parameter exists
     if ( empty( $order_id ) ) {
@@ -236,12 +238,23 @@ function shieldclimbgateway_revolutcom_change_order_status_callback( $request ) 
 
     // Check if the order is pending and payment method is 'shieldclimb-revolut'
     if ( $order && $order->get_status() !== 'processing' && $order->get_status() !== 'completed' && 'shieldclimb-revolut' === $order->get_payment_method() ) {
+	$shieldclimbgateway_revolutcomexpected_amount = (float)$order->get_meta('shieldclimb_revolutcom_expected_amount', true);
+	$shieldclimbgateway_revolutcomthreshold = 0.60 * $shieldclimbgateway_revolutcomexpected_amount;
+		if ( $shieldclimbgateway_revolutcomfloatpaid_value_coin < $shieldclimbgateway_revolutcomthreshold ) {
+			// Mark the order as failed and add an order note
+            $order->update_status('failed', __( 'Payment received is less than 60% of the order total. Customer may have changed the payment values on the checkout page.', 'shieldclimb-high-risk-card-payment-gateway' ));
+            /* translators: 1: Transaction ID */
+            $order->add_order_note(sprintf( __( 'Order marked as failed: Payment received is less than 60%% of the order total. Customer may have changed the payment values on the checkout page. TXID: %1$s', 'shieldclimb-high-risk-card-payment-gateway' ), $shieldclimbgateway_revolutcompaid_txid_out));
+            return array( 'message' => 'Order status changed to failed due to partial payment.' );
+			
+		} else {
         // Change order status to processing
 		$order->payment_complete();
 		/* translators: 1: Transaction ID */
 		$order->add_order_note( sprintf(__('Payment completed by the provider TXID: %1$s', 'shieldclimb-high-risk-card-payment-gateway'), $shieldclimbgateway_revolutcompaid_txid_out) );
         // Return success response
         return array( 'message' => 'Order marked as paid and status changed.' );
+		}
     } else {
         // Return error response if conditions are not met
         return new WP_Error( 'order_not_eligible', __( 'Order is not eligible for status change.', 'shieldclimb-high-risk-card-payment-gateway' ), array( 'status' => 400 ) );

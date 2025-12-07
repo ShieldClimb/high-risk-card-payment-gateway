@@ -4,7 +4,7 @@ Donate link: https://shieldclimb.com/product/donate-now/
 Tags: payment gateway, high-risk payment, woocommerce, credit card, payment
 Requires at least: 5.8
 Tested up to: 6.9
-Stable tag: 1.2.7
+Stable tag: 1.2.8
 Requires PHP: 7.2
 WC requires at least: 5.8
 WC tested up to: 10.3.6
@@ -103,6 +103,11 @@ Anyone can use our payment plugin instantly without providing any information. H
 2. screenshot-2.png
 
 == Changelog ==
+
+= V1.2.8 =
+
+* **Updated**: Payment providers list
+* **Fixed**: Bug
 
 = V1.2.7 =
 
