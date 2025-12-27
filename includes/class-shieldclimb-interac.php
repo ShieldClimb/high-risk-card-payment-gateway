@@ -50,7 +50,7 @@ class shieldclimb_Instant_Payment_Gateway_Interac extends WC_Payment_Gateway {
                 'title'       => esc_html__('Title', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping title
                 'type'        => 'text',
                 'description' => esc_html__('Payment method title that users will see during checkout.', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping description
-                'default'     => esc_html__('Pay with Interac (CAD) (Credit Card)', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping default value
+                'default'     => esc_html__('Pay with Interac (CAD Only) (Credit Card)', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping default value
                 'desc_tip'    => true,
             ),
             'description' => array(

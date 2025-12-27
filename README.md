@@ -36,6 +36,9 @@ ShieldClimb's **[High-Risk Card Payment Gateway](https://shieldclimb.com/high-ri
 - **[Admin Tracking](https://shieldclimb.com/high-risk-payment-gateway/)**: Monitor payouts within WordPress.
 - **[Multi-Currency Support](https://shieldclimb.com/high-risk-payment-gateway/)**: Accept payments in various currencies.
 
+Each payment provider has its own minimum order requirement. Please check the full list of [minimum payment amounts](https://shieldclimb.com/high-risk-payment-gateway/#minimum-payment-amounts) for more information.
+
+
 ## 🔒 Security & Compliance
 
 - **[Secure Transactions](https://shieldclimb.com/high-risk-payment-gateway/)** – End-to-end encryption ensures safe processing.
@@ -68,6 +71,11 @@ Anyone can use our plugin, but businesses listed in our **[Prohibited Business L
 ![Checkout Example](https://shieldclimb.com/wp-content/uploads/2025/03/screenshot-2-2.png)
 
 ## 📜 Changelog
+
+### V1.3.0
+
+- Updated: Tested up to WooCommerce 10.4.3
+- Bug Fixed: Fixed provider visibility issues where Robinhood and Stripe were not visible
 
 ### V1.2.9
 

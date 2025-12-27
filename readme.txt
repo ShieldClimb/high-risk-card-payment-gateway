@@ -4,10 +4,10 @@ Donate link: https://shieldclimb.com/product/donate-now/
 Tags: payment gateway, high-risk payment, woocommerce, credit card, payment
 Requires at least: 5.8
 Tested up to: 6.9
-Stable tag: 1.2.9
+Stable tag: 1.3.0
 Requires PHP: 7.2
 WC requires at least: 5.8
-WC tested up to: 10.3.6
+WC tested up to: 10.4.3
 License: GPLv3
 License URI: http://www.gnu.org/licenses/gpl-3.0.html
 
@@ -32,6 +32,8 @@ Card Payment Gateway with Instant Payouts to your USDC wallet and Chargeback Pro
 * Low Minimum Orders (from $1 USD)
 * Custom Payment Icons Per Provider
 * Multi-Currency Support
+
+Each payment provider has its own minimum order requirement. Please check the full list of [minimum payment amounts](https://shieldclimb.com/high-risk-payment-gateway/#minimum-payment-amounts) for more information.
 
 📺 **Watch the full install and setup tutorial here:**  
 [youtube https://www.youtube.com/watch?v=Z9CLAPr6heA]
@@ -103,6 +105,11 @@ Anyone can use our payment plugin instantly without providing any information. H
 2. screenshot-2.png
 
 == Changelog ==
+
+= V1.3.0 =
+
+* **Updated**: Tested up to WooCommerce 10.4.3
+* **Bug Fixed**: Fixed provider visibility issues where Robinhood and Stripe were not visible
 
 = V1.2.9 =
 

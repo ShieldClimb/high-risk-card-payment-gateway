@@ -19,7 +19,7 @@ class shieldclimb_Instant_Payment_Gateway_Revolut extends WC_Payment_Gateway {
     public function __construct() {
         $this->id                 = 'shieldclimb-revolut';
         $this->icon = sanitize_url($this->get_option('icon_url'));
-        $this->method_title       = esc_html__('ShieldClimb – revolut (EU/EEA only) | Min EUR6', 'shieldclimb-high-risk-card-payment-gateway'); // Escaping title
+        $this->method_title       = esc_html__('ShieldClimb – revolut (EU/EEA Only) | Min EUR6', 'shieldclimb-high-risk-card-payment-gateway'); // Escaping title
         $this->method_description = esc_html__('High Risk Business Card Payment Gateway with Chargeback Protection and Instant USDC POLYGON Wallet Payouts using revolut.com infrastructure', 'shieldclimb-high-risk-card-payment-gateway'); // Escaping description
         $this->has_fields         = false;
 
@@ -49,7 +49,7 @@ class shieldclimb_Instant_Payment_Gateway_Revolut extends WC_Payment_Gateway {
                 'title'       => esc_html__('Title', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping title
                 'type'        => 'text',
                 'description' => esc_html__('Payment method title that users will see during checkout.', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping description
-                'default'     => esc_html__('Pay with Revolut (EU/EEA) (Credit Card)', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping default value
+                'default'     => esc_html__('Pay with Revolut (EU/EEA Only) (Credit Card)', 'shieldclimb-high-risk-card-payment-gateway'), // Escaping default value
                 'desc_tip'    => true,
             ),
             'description' => array(

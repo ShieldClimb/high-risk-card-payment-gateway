@@ -3,12 +3,12 @@
  * Plugin Name: ShieldClimb – Card Payment Gateway with Instant Payouts and Chargeback Protection
  * Plugin URI: https://shieldclimb.com/high-risk-payment-gateway/
  * Description: High-Risk Business Card Payment Gateway with Instant Payouts to Your USDC Wallet and Full Chargeback Protection – Includes Automatic Order Processing and Auto-Hide Provider Options by Region and Minimum Balance (For setting up go to > Woocommerce > Setting > Payments tab).
- * Version: 1.2.9
+ * Version: 1.3.0
  * Requires Plugins: woocommerce
  * Requires at least: 5.8
  * Tested up to: 6.9
  * WC requires at least: 5.8
- * WC tested up to: 10.3.6
+ * WC tested up to: 10.4.3
  * Requires PHP: 7.2
  * Author: shieldclimb.com
  * Author URI: https://shieldclimb.com/

@@ -1,6 +1,5 @@
 <?php
 add_filter('woocommerce_available_payment_gateways', 'shieldclimbgateway_hide_payment_methods');
-add_filter('woocommerce_available_payment_gateways', 'shieldclimbgateway_payment_gateway_for_us_ip_customers');
 
 function shieldclimbgateway_hide_payment_methods($available_gateways) {
     if (!is_checkout() && !is_wc_endpoint_url('order-pay')) {
@@ -66,24 +65,6 @@ function shieldclimbgateway_hide_payment_methods($available_gateways) {
         if ($cart_total_in_usd < $min_amount && isset($available_gateways[$gateway_slug])) {
             unset($available_gateways[$gateway_slug]);
         }
-    }
-
-    return $available_gateways;
-}
-
-function shieldclimbgateway_payment_gateway_for_us_ip_customers($available_gateways) {
-    if ((!is_checkout() && !is_wc_endpoint_url('order-pay')) || is_admin()) {
-        return $available_gateways;
-    }
-
-    // Get the user's country based on IP address
-    $user_country = WC_Geolocation::geolocate_ip();
-
-    if (isset($user_country['country']) && $user_country['country'] !== 'US') {
-        // List of payment gateways to remove for non-US customers
-        unset($available_gateways['shieldclimb-stripe']);
-        unset($available_gateways['shieldclimb-robinhood']);
-        // Add more unset() calls here if needed
     }
 
     return $available_gateways;
